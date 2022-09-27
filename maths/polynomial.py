@@ -50,7 +50,7 @@ class Polynomial():
     def __mul__(self, other):
         return self.multiply(self, other)
     
-    def __str__(self):
+    def __repr__(self):
         return '<' + ' + '.join([f'{c}x^{i}' for i, c in enumerate(self.coefficients) if c != 0]) + '>'
     
 
