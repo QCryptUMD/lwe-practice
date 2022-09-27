@@ -1,5 +1,6 @@
 # TODO
 
+from maths.polynomial import Polynomial
 import random
 
 arr=[]
@@ -13,7 +14,7 @@ for i in range(rows):
 
         for x in range(0, rand_val):
             polynomials.append(random.randint(0,1))
-        col.append(polynomials)
+        col.append(Polynomial.from_coefficients(polynomials))
     arr.append(col)
 print(arr)
 
