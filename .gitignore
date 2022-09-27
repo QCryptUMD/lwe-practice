@@ -1,0 +1,9 @@
+!IGNORE
+__pycache__
+venv
+
+.breakpoints
+replit.nix
+.replit
+.env
+*~
