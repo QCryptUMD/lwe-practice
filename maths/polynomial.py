@@ -2,16 +2,16 @@ from dataclasses import dataclass
 
 # note: specialized for Z_2[x]/(x^256 + 1)
 MOD = 2
-DEGREE = 4
+DEGREE = 256
 PMOD = [1] + [0]*255 + [1] # unused
 
 @dataclass(frozen=True)
 class Polynomial():
-    coefficients : list[int]
+    coefficients : tuple[int]
     
     @classmethod
     def from_coefficients(cls, coefficients):
-        return cls.reduce(cls(coefficients=coefficients))
+        return cls.reduce(cls(coefficients=tuple(coefficients)))
     
     @classmethod
     def reduce(cls, poly):
@@ -43,23 +43,23 @@ class Polynomial():
             for j, c2 in enumerate(p2.coefficients):
                 coefficients[i+j] += c1 * c2
         return cls.from_coefficients(coefficients)
-    
+        
     def __add__(self, other):
         return self.add(self, other)
     
     def __mul__(self, other):
         return self.multiply(self, other)
     
-    def __str__(self):
+    def __repr__(self):
         return '<' + ' + '.join([f'{c}x^{i}' for i, c in enumerate(self.coefficients) if c != 0]) + '>'
     
 
 # tests
 if __name__ == '__main__':
     c1 = Polynomial.from_coefficients([0,1,0,1])
-    c2 = Polynomial.from_coefficients([1,1,0])
+    c2 = Polynomial.from_coefficients([1,1,0,0,0,0,0,0,0,0,0,1])
     c3 = Polynomial.from_coefficients([0, 1, 0, 0, 1, 1])
-
+    
     print(c1)
     print(c2)
     print(c3)
