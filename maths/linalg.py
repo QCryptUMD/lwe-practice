@@ -1,11 +1,10 @@
 from copy import deepcopy
 
-import maths.polynomial as poly
-
+from . import polynomial as poly
 
 class Matrix():
-    matrix : list[list[float]]
-    #matrix : list[list[poly.Polynomial]]
+    #matrix : list[list[float]]
+    matrix : list[list[poly.Polynomial]]
 
     def __init__(self, matrix):
         self.matrix = matrix
@@ -21,8 +20,8 @@ class Matrix():
 
         for i in range(dim1[0]):
             for j in range(dim1[1]):
-                sum[i].append(self.matrix[i][j] + other.matrix[i][j])
-                #sum[i].append(poly.add(self.matrix[i][j] + other.matrix[i][j]))
+                #sum[i].append(self.matrix[i][j] + other.matrix[i][j])
+                sum[i].append(poly.add(self.matrix[i][j] + other.matrix[i][j]))
 
         return Matrix(sum)
 
@@ -40,8 +39,8 @@ class Matrix():
             for col in range(dim2[1]):
                 sum = 0.0
                 for i in range(0, dim1[1]):
-                    sum += self.matrix[row][i] * other.matrix[i][col]
-                    #sum = poly.add(sum, poly.multiply(self.matric[row][i], other.matrix[i][col]))
+                    #sum += self.matrix[row][i] * other.matrix[i][col]
+                    sum = poly.add(sum, poly.multiply(self.matrix[row][i], other.matrix[i][col]))
                 product[row].append(sum)
 
         return Matrix(product)
@@ -68,7 +67,7 @@ class Matrix():
 
 
 # testing
-
+""" These tests are only for real numbers
 m1 = Matrix([[1,2],[3,4]])
 m2 = Matrix([[1, 0],[0, 1]])
 m3 = Matrix([[1,2,3],[4,5,6]])
@@ -78,3 +77,4 @@ print(m1.add(m2).matrix)
 print(m3.matrix)
 print(m3.transpose().matrix)
 print(m1.scale(-23.2).matrix)
+"""
