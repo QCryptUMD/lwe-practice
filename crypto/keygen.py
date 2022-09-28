@@ -8,15 +8,14 @@ def keygen():
     #Generate the matrix first
 
     RAND_MAT_SIZE = 3
-    MAX_DEGREE = 255
-    COEFF_MOD = 1
+    MAX_DEGREE = 256
 
     matA = [ [] for _ in range(RAND_MAT_SIZE) ]
     
     for row in range(len(matA)):
         for col in range(RAND_MAT_SIZE):
-            degree = random.randint(0, MAX_DEGREE)
-            poly = [ random.randint(0, 1) for _ in range(degree + 1) ]
+            
+            poly = [ random.randint(0, 1) for _ in range(MAX_DEGREE) ]
 
             matA[row].append(Polynomial.from_coefficients(poly))
             
@@ -24,23 +23,19 @@ def keygen():
 
     # Now generate the secret and error term
 
-    secret = [ [] for _ in range(RAND_MAX_SIZE) ]
+    secret = [ [] for _ in range(RAND_MAT_SIZE) ]
 
     for row in range(len(secret)):
-        degree = random.randint(0, MAX_DEGREE)
-        poly = [ random.randint(0, 1) for _ in range (degree + 1) ]
+        poly = [ random.randint(0, 1) for _ in range(MAX_DEGREE) ]
 
         secret.append(Polynomial.from_coefficients(poly))
 
     secret = Matrix(secret)
 
-    errGen = ErrorGenerator()
-
-    error = errGen.generate()
+    error = ErrorGenerator.generate()
 
     public_key = (matA.multiply(secret).add(error), matA)
 
     return (public_key, secret)
 
 #print(matA.matrix)
-

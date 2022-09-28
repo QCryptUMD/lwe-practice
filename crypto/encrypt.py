@@ -29,8 +29,8 @@ def encrypt(pk_vector, pk_matrix, message):
     e2 = ErrorGenerator.generate()[0]
 
 
-    # These lines don't work yet
-    # u = pk_matrix.transpose().multiply(r) + e1
-    # v = pk_vector.transpose().multiply(r) + e2 + message_poly
+    # These lines maybe work now
+    u = pk_matrix.transpose().multiply(r) + e1
+    v = pk_vector.transpose().multiply(r) + e2 + message_poly
 
     # return u, v
