@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from typing import Iterable
+from typing_extensions import Self
 
 # note: specialized for Z_2[x]/(x^256 + 1)
 MOD = 2
@@ -7,14 +9,14 @@ PMOD = [1] + [0]*255 + [1] # unused
 
 @dataclass(frozen=True)
 class Polynomial():
-    coefficients : tuple[int]
+    coefficients : tuple[int, ...]
     
     @classmethod
-    def from_coefficients(cls, coefficients):
+    def from_coefficients(cls, coefficients: Iterable[int]) -> Self:
         return cls.reduce(cls(coefficients=tuple(coefficients)))
     
     @classmethod
-    def reduce(cls, poly):
+    def reduce(cls, poly: Self) -> Self:
         coefficients = [0] * DEGREE
         
         # this only works for x^DEGREE + 1
@@ -30,27 +32,35 @@ class Polynomial():
         return cls(coefficients=coefficients)
     
     @classmethod
-    def add(cls, p1, p2):
-        return cls.from_coefficients([a + b for a, b in zip(p1.coefficients, p2.coefficients)])
+    def add(cls, p1: Self, p2: Self) -> Self:
+        coefficients = [0] * DEGREE
+        
+        for i in range(DEGREE):
+            if i < len(p1.coefficients):
+                coefficients[i] += p1.coefficients[i]
+            if i < len(p2.coefficients):
+                    coefficients[i] += p2.coefficients[i]
+        
+        return cls.from_coefficients(coefficients)
     
     @classmethod
-    def multiply(cls, p1, p2):
+    def multiply(cls, p1: Self, p2: Self) -> Self:
         p1 = cls.reduce(p1)
         p2 = cls.reduce(p2)
         
         coefficients = [0] * DEGREE * 2
         for i, c1 in enumerate(p1.coefficients):
             for j, c2 in enumerate(p2.coefficients):
-                coefficients[i+j] += c1 * c2
+                coefficients[i + j] += c1 * c2
         return cls.from_coefficients(coefficients)
-        
-    def __add__(self, other):
+            
+    def __add__(self, other: Self) -> Self:
         return self.add(self, other)
     
-    def __mul__(self, other):
+    def __mul__(self, other: Self) -> Self:
         return self.multiply(self, other)
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '<' + ' + '.join([f'{c}x^{i}' for i, c in enumerate(self.coefficients) if c != 0]) + '>'
     
 
