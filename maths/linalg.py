@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-import polynomial as poly
+import maths.polynomial as poly
 
 
 class Matrix():
@@ -18,14 +18,14 @@ class Matrix():
             raise Exception("Invalid dimensions")
 
         sum = [ [] for _ in range(dim1[0])]
-        
+
         for i in range(dim1[0]):
             for j in range(dim1[1]):
                 sum[i].append(self.matrix[i][j] + other.matrix[i][j])
                 #sum[i].append(poly.add(self.matrix[i][j] + other.matrix[i][j]))
 
         return Matrix(sum)
-        
+
     def multiply(self, other):
         dim1 = (len(self.matrix), len(self.matrix[0]))
         dim2 = (len(other.matrix), len(other.matrix[0]))
@@ -45,7 +45,7 @@ class Matrix():
                 product[row].append(sum)
 
         return Matrix(product)
-    
+
     def transpose(self):
         dim = (len(self.matrix), len(self.matrix[0]))
         t = [ [] for _ in range(dim[1]) ]
@@ -59,11 +59,11 @@ class Matrix():
     def scale(self, num):
         dim = (len(self.matrix), len(self.matrix[0]))
         s = [ [] for _ in range(dim[0]) ]
-        
+
         for row in range(dim[0]):
             for col in range(dim[1]):
                 s[row].append(self.matrix[row][col] * num)
-                
+
         return Matrix(s)
 
 

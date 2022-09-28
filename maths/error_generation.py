@@ -1,4 +1,4 @@
-import polynomial
+from maths.polynomial import Polynomial
 import random
 
 class ErrorGenerator():
@@ -15,8 +15,8 @@ class ErrorGenerator():
             sum += random.randrange(0,2)
         coefficients.append(sum)
 
-      return [Polynomial.from_coefficients(coefficients[:256]), 
-              Polynomial.from_coefficients(coefficients[256:512]), 
+      return [Polynomial.from_coefficients(coefficients[:256]),
+              Polynomial.from_coefficients(coefficients[256:512]),
               Polynomial.from_coefficients(coefficients[512:])]
 
-    
+
