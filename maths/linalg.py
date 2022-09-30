@@ -20,8 +20,8 @@ class Matrix():
 
         for i in range(dim1[0]):
             for j in range(dim1[1]):
-                #sum[i].append(self.matrix[i][j] + other.matrix[i][j])
-                sum[i].append(poly.add(self.matrix[i][j] + other.matrix[i][j]))
+                sum[i].append(self.matrix[i][j] + other.matrix[i][j])
+                #sum[i].append(poly.add(self.matrix[i][j] + other.matrix[i][j]))
 
         return Matrix(sum)
 
@@ -37,10 +37,10 @@ class Matrix():
 
         for row in range(dim1[0]):
             for col in range(dim2[1]):
-                sum = 0.0
+                sum = poly.Polynomial.from_coefficients([0] * 256)
                 for i in range(0, dim1[1]):
-                    #sum += self.matrix[row][i] * other.matrix[i][col]
-                    sum = poly.add(sum, poly.multiply(self.matrix[row][i], other.matrix[i][col]))
+                    sum += self.matrix[row][i] * other.matrix[i][col]
+                    #sum = poly.add(sum, poly.multiply(self.matrix[row][i], other.matrix[i][col]))
                 product[row].append(sum)
 
         return Matrix(product)
