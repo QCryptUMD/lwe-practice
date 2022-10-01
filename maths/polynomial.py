@@ -39,7 +39,19 @@ class Polynomial():
             if i < len(p1.coefficients):
                 coefficients[i] += p1.coefficients[i]
             if i < len(p2.coefficients):
-                    coefficients[i] += p2.coefficients[i]
+                coefficients[i] += p2.coefficients[i]
+
+        return cls.from_coefficients(coefficients)
+
+    @classmethod
+    def sub(cls, p1: Self, p2: Self) -> Self:
+        coefficients = [0] * DEGREE
+
+        for i in range(DEGREE):
+            if i < len(p1.coefficients):
+                coefficients[i] += p1.coefficients[i]
+            if i < len(p2.coefficients):
+                coefficients[i] -= p2.coefficients[i]
 
         return cls.from_coefficients(coefficients)
 
@@ -59,6 +71,9 @@ class Polynomial():
 
     def __mul__(self, other: Self) -> Self:
         return self.multiply(self, other)
+
+    def __sub__(self, other: Self) -> Self:
+        return self.sub(self, other)
 
     def __repr__(self) -> str:
         return '<' + ' + '.join([f'{c}x^{i}' for i, c in enumerate(self.coefficients) if c != 0]) + '>'
