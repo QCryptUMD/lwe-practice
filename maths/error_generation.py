@@ -8,7 +8,7 @@ class ErrorGenerator():
 
       for i in range(768):
         sum = 0
-        for i in range(6):
+        for j in range(6):
           if i > 2:
             sum -= random.randrange(0,2)
           else:
